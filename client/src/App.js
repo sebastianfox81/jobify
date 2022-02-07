@@ -1,11 +1,10 @@
-
+import React from 'react'
+import Landing from './pages/Landing';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-      Jobify
-      </header>
+    <div>
+      <Landing />
     </div>
   );
 }
