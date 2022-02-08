@@ -1,19 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import { FormRow, Alert } from '../components'
+import React, { useState, useEffect, useContext } from 'react';
+import { FormRow, Alert } from '../components';
+import { useGlobalContext } from '../context/appContext'
 
 const initialState = {
   name: '',
   email: '',
   password: '',
   isMember: true,
-  showAlert: false
+
 }
 
 const Register = () => {
 
+  const { isLoading, showAlert } = useGlobalContext();
+  console.log(showAlert, isLoading)
+
   const [ values, setValues ] = useState(initialState);
   // global state and useNavigate
-  const { name, email, password, isMember, showAlert } = values;
+  const { name, email, password, isMember} = values;
 
   const toggleMember = () => {
     setValues({...values, isMember: !isMember})
