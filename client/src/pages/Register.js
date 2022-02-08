@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { FormRow } from '../components'
+import { FormRow, Alert } from '../components'
 
 const initialState = {
   name: '',
   email: '',
   password: '',
-  isMember: true
+  isMember: true,
+  showAlert: false
 }
 
 const Register = () => {
@@ -21,15 +22,20 @@ const Register = () => {
     console.log(e.target)
   }
 
-  return <div>
-    <h3>Register</h3>
+  const { name, email, password, isMember, showAlert } = values;
+
+  return (
+  <div>
+    <h3>Login</h3>
+    {showAlert && <Alert />}
     <form onSubmit={handleSubmit}>
-    <FormRow type="text" value={values.name} id="name" handleChange={handleChange}/>
-    <FormRow type="email" value={values.email} id="email" handleChange={handleChange}/>
-    <FormRow type="password" value={values.password} id="password" handleChange={handleChange}/>
+    <FormRow type="text" value={name} id="name" handleChange={handleChange}/>
+    <FormRow type="email" value={email} id="email" handleChange={handleChange}/>
+    <FormRow type="password" value={password} id="password" handleChange={handleChange}/>
       <button type="submit">Submit</button>
     </form>
-  </div>;
+  </div>
+  );
 };
 
 export default Register;
