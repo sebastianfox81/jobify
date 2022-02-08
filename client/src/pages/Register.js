@@ -12,8 +12,7 @@ const initialState = {
 
 const Register = () => {
 
-  const { isLoading, showAlert } = useGlobalContext();
-  console.log(showAlert, isLoading)
+  const { isLoading, showAlert, displayAlert } = useGlobalContext();
 
   const [ values, setValues ] = useState(initialState);
   // global state and useNavigate
@@ -24,12 +23,19 @@ const Register = () => {
   }
 
   const handleChange = (e) => {
-    console.log(e.target)
+    setValues({
+      ...values, [e.target.id]: e.target.value
+    })
   }
 
   const handleSubmit  = (e) => {
     e.preventDefault();
-    console.log(e.target)
+    if (!email || !password || (!isMember && !name)) {
+      displayAlert();
+      return
+    }
+
+    console.log(values)
   }
 
 
