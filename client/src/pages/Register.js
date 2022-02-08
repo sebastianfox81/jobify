@@ -13,6 +13,12 @@ const Register = () => {
 
   const [ values, setValues ] = useState(initialState);
   // global state and useNavigate
+  const { name, email, password, isMember, showAlert } = values;
+
+  const toggleMember = () => {
+    setValues({...values, isMember: !isMember})
+  }
+
   const handleChange = (e) => {
     console.log(e.target)
   }
@@ -22,17 +28,24 @@ const Register = () => {
     console.log(e.target)
   }
 
-  const { name, email, password, isMember, showAlert } = values;
 
   return (
   <div>
-    <h3>Login</h3>
+    <h3>{isMember ? 'Login' : 'Register'}</h3>
     {showAlert && <Alert />}
     <form onSubmit={handleSubmit}>
+      {!isMember &&
     <FormRow type="text" value={name} id="name" handleChange={handleChange}/>
+      }
     <FormRow type="email" value={email} id="email" handleChange={handleChange}/>
     <FormRow type="password" value={password} id="password" handleChange={handleChange}/>
       <button type="submit">Submit</button>
+    <p>
+      {isMember ? 'Not a member yet?' : 'Already a member'}
+    </p>
+      <button type="button" onClick={toggleMember}>
+        {isMember ? 'Register' : 'Login'}
+      </button>
     </form>
   </div>
   );
