@@ -6,7 +6,16 @@ const reducer = (state, action) => {
       ...state,
       showAlert: true,
       alertText: 'Please provide all values',
-      alertType: 'danger',}
+      alertType: 'danger',
+    }
+  }
+  if (action.type === 'CLEAR_ALERT') {
+    return {
+      ...state,
+      showAlert: false,
+      alertText: '',
+      alertType: '',
+    }
   }
   return state
 }
