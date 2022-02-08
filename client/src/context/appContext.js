@@ -1,24 +1,31 @@
-import React, { useContext, useReducer, useState } from 'react';
-import reducer from './reducer'
+import React, { useContext, useReducer } from "react";
+import reducer from "./reducer";
 
 const initialState = {
   isLoading: false,
   showAlert: false,
-  alertText: '',
-  alertType: '',
-}
+  alertText: "",
+  alertType: "",
+};
 
 const AppContext = React.createContext();
 
-const AppProvider = ({children}) => {
+const AppProvider = ({ children }) => {
+  const [state, dispatch] = useReducer(reducer, initialState);
 
-  const [ state, dispatch ] = useReducer(reducer, initialState)
+  const displayAlert = () => {
+    dispatch({ type: 'SHOW_ALERT' });
+  };
 
-  return <AppContext.Provider value={{...state}}>{children}</AppContext.Provider>
-}
+  return (
+    <AppContext.Provider value={{ ...state, displayAlert }}>
+      {children}
+    </AppContext.Provider>
+  );
+};
 
 const useGlobalContext = () => {
-  return useContext(AppContext)
-}
+  return useContext(AppContext);
+};
 
-export { AppContext, AppProvider, useGlobalContext }
+export { AppContext, AppProvider, useGlobalContext };
