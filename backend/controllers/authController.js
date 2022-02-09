@@ -1,12 +1,12 @@
 const authCtrl = {};
 
-authCtrl.register = (req, res) => {
+authCtrl.register = async (req, res) => {
   res.send('register user')
 }
-authCtrl.login = (req, res) => {
+authCtrl.login = async (req, res) => {
   res.send('login user')
 }
-authCtrl.updateUser = (req, res) => {
+authCtrl.updateUser = async (req, res) => {
   res.send('update user')
 }
 
