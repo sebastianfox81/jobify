@@ -7,7 +7,8 @@ authCtrl.register = async (req, res) => {
     const { name, email, password } = req.body;
     const newUser = await new User({ name, email, password });
     await newUser.save()
-    res.status(200).json('New User Registered')
+    const token = newUser.createJWT()
+    res.status(200).json({ newUser, token })
   } catch (err) {
     res.status(400).json(err)
   }
