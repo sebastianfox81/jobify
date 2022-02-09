@@ -13,9 +13,7 @@ const initialState = {
 const Register = () => {
 
   const { isLoading, showAlert, displayAlert } = useGlobalContext();
-
   const [ values, setValues ] = useState(initialState);
-  // global state and useNavigate
   const { name, email, password, isMember} = values;
 
   const toggleMember = () => {
@@ -43,17 +41,17 @@ const Register = () => {
   <div>
     <h3>{isMember ? 'Login' : 'Register'}</h3>
     {showAlert && <Alert />}
-    <form onSubmit={handleSubmit}>
+    <form className="form"onSubmit={handleSubmit}>
       {!isMember &&
     <FormRow type="text" value={name} id="name" handleChange={handleChange}/>
       }
     <FormRow type="email" value={email} id="email" handleChange={handleChange}/>
     <FormRow type="password" value={password} id="password" handleChange={handleChange}/>
-      <button type="submit">Submit</button>
+      <button type="submit" className="btn">Submit</button>
     <p>
       {isMember ? 'Not a member yet?' : 'Already a member'}
     </p>
-      <button type="button" onClick={toggleMember}>
+      <button className="btn" type="button" onClick={toggleMember}>
         {isMember ? 'Register' : 'Login'}
       </button>
     </form>
