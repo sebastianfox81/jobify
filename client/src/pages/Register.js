@@ -12,8 +12,9 @@ const initialState = {
 
 const Register = () => {
 
-  const { isLoading, showAlert, displayAlert } = useGlobalContext();
+  const { isLoading, showAlert, displayAlert, registerUser } = useGlobalContext();
   const [ values, setValues ] = useState(initialState);
+
   const { name, email, password, isMember} = values;
 
   const toggleMember = () => {
@@ -32,8 +33,12 @@ const Register = () => {
       displayAlert();
       return
     }
-
-    console.log(values)
+    const currUser = { name, email, password}
+    if (isMember) {
+      console.log('User is already a member')
+    } else {
+      registerUser(currUser)
+    }
   }
 
 
@@ -47,7 +52,7 @@ const Register = () => {
       }
     <FormRow type="email" value={email} id="email" handleChange={handleChange}/>
     <FormRow type="password" value={password} id="password" handleChange={handleChange}/>
-      <button type="submit" className="btn">Submit</button>
+      <button type="submit" className="btn" disabled={isLoading}>Submit</button>
     <p>
       {isMember ? 'Not a member yet?' : 'Already a member'}
     </p>
