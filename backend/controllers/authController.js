@@ -18,18 +18,30 @@ authCtrl.register = async (req, res) => {
     res.status(400).json(err)
   }
 }
+
 authCtrl.login = async (req, res) => {
   res.send('login user')
 }
+
 authCtrl.updateUser = async (req, res) => {
   res.send('update user')
 }
+
 authCtrl.deleteUser = async (req, res) => {
   try {
     await User.findByIdAndDelete(req.params.id)
     res.status(200).json('User deleted')
   } catch (err) {
     res.status(400).json(err)
+  }
+}
+
+authCtrl.getAllUsers = async (req, res) => {
+  try {
+    const users = await User.find()
+    res.status(200).json(users)
+  } catch (err) {
+    console.log(err)
   }
 }
 
