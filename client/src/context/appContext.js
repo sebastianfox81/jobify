@@ -2,15 +2,19 @@ import React, { useContext, useReducer } from "react";
 import reducer from "./reducer";
 import axios from 'axios';
 
+const user = localStorage.getItem('user')
+const token = localStorage.getItem('token')
+const userLocation = localStorage.getItem('userLocation')
+
 const initialState = {
   isLoading: false,
   showAlert: false,
   alertText: "",
   alertType: "",
-  user: null,
+  user: user ? JSON.parse(user) : null,
   token: null,
-  userLocation: '',
-  jobLocation: '',
+  userLocation: userLocation || '',
+  jobLocation: userLocation || '',
 };
 
 const AppContext = React.createContext();
@@ -29,6 +33,18 @@ const AppProvider = ({ children }) => {
     }, 3000)
   }
 
+  const addUserToLocalStorage = ({ user, token, location }) => {
+    localStorage.setItem('user', JSON.stringify(user))
+    localStorage.setItem('token', token)
+    localStorage.setItem('location', location)
+  }
+
+  const removeUserFromLocalStorage = () => {
+    localStorage.removeItem('user')
+    localStorage.removeItem('token')
+    localStorage.removeItem('location')
+  }
+
   const registerUser = async (currUser) => {
     dispatch({ type: 'REGISTER_USER_BEGIN'})
     try {
@@ -39,11 +55,12 @@ const AppProvider = ({ children }) => {
         type: 'REGISTER_USER_SUCCESS',
         payload: { user, token, location },
       })
+      addUserToLocalStorage({ user, token, location })
     } catch (err) {
       console.log(err)
       dispatch({ type: 'REGISTER_USER_ERROR', payload: { msg: err.res.data.msg}})
     }
-    console.log(currUser)
+    // console.log(currUser)
     clearAlert()
   }
 
