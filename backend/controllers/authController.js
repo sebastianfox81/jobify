@@ -1,26 +1,35 @@
 const User = require('../models/User')
+const statusCodes = require('http-status-codes')
 
 const authCtrl = {};
 
 authCtrl.register = async (req, res, next) => {
   try {
-    const { name, email, password } = req.body;
-    const user = await new User({ name, email, password });
-    await user.save()
+    const user = await User.create(req.body)
     const token = user.createJWT()
-    res.status(200).json({ user : {
+    res.status(statusCodes.CREATED).json({ user : {
       name: user.name,
       email: user.email,
       location: user.location,
       lastname: user.lastname
     }, token })
-  } catch (err) {
-    next(err)
+  } catch (error) {
+    next(error)
   }
 }
 
 authCtrl.login = async (req, res) => {
-  res.send('login user')
+
+  const { email, password} = req.body;
+  const user = await User.findOne({ email }).select('+password')
+  const isPasswordCorrect = user.comparePassword(password)
+  try {
+    res.status(200).json({ msg: 'Login successful'})
+  } catch (err) {
+    res.status(500).json({ msg: err.message})
+  }
+
+
 }
 
 authCtrl.updateUser = async (req, res) => {
