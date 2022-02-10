@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { FormRow, Alert } from '../components';
 import { useGlobalContext } from '../context/appContext'
 
@@ -11,9 +12,9 @@ const initialState = {
 }
 
 const Register = () => {
-
-  const { isLoading, showAlert, displayAlert, registerUser } = useGlobalContext();
+  const navigate = useNavigate();
   const [ values, setValues ] = useState(initialState);
+  const { user, isLoading, showAlert, displayAlert, registerUser } = useGlobalContext();
 
   const { name, email, password, isMember} = values;
 
@@ -40,6 +41,15 @@ const Register = () => {
       registerUser(currUser)
     }
   }
+
+  useEffect(() => {
+    if (user) {
+      setTimeout(() => {
+        navigate('/')
+        console.log('navigated!')
+      }, 3000)
+    }
+  }, [user, navigate])
 
 
   return (

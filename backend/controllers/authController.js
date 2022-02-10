@@ -2,20 +2,20 @@ const User = require('../models/User')
 
 const authCtrl = {};
 
-authCtrl.register = async (req, res) => {
+authCtrl.register = async (req, res, next) => {
   try {
     const { name, email, password } = req.body;
-    const newUser = await new User({ name, email, password });
-    await newUser.save()
-    const token = newUser.createJWT()
-    res.status(200).json({ newUser :{
-      name: newUser.name,
-      email: newUser.email,
-      location: newUser.location,
-      lastname: newUser.lastname
+    const user = await new User({ name, email, password });
+    await user.save()
+    const token = user.createJWT()
+    res.status(200).json({ user : {
+      name: user.name,
+      email: user.email,
+      location: user.location,
+      lastname: user.lastname
     }, token })
   } catch (err) {
-    res.status(400).json(err)
+    next(err)
   }
 }
 

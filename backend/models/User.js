@@ -22,7 +22,7 @@ const userSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: [true, "Please provide email"],
+    required: [true, "Please provide password"],
     minLength: 6,
     select: false,
   },
