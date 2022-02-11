@@ -1,11 +1,12 @@
-const statusCodes = require('http-status-codes')
-const Errors = {};
+import statusCodes from 'http-status-codes'
 
-Errors.errorHandlerMiddleware = (err, req, res, next) => {
-  // console.log(err)
+
+const errorHandlerMiddleware = (err, req, res, next) => {
+  console.log(err.message)
+
   const defaultError = {
-    code: statusCodes.default.INTERNAL_SERVER_ERROR,
-    msg: 'Something went wrong try again later'
+    code: err.code || statusCodes.default.INTERNAL_SERVER_ERROR,
+    msg: err.message || 'Something went wrong try again later'
   }
   if (err.name === 'ValidationError') {
     defaultError.code = statusCodes.default.BAD_REQUEST
@@ -20,4 +21,4 @@ Errors.errorHandlerMiddleware = (err, req, res, next) => {
   res.status(defaultError.code).json({ msg: defaultError.msg})
 }
 
-module.exports = Errors
+export default errorHandlerMiddleware;
