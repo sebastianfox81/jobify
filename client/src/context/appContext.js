@@ -4,7 +4,7 @@ import axios from 'axios';
 
 const user = localStorage.getItem('user')
 const token = localStorage.getItem('token')
-const userLocation = localStorage.getItem('userLocation')
+const userLocation = localStorage.getItem('location')
 
 const initialState = {
   isLoading: false,
@@ -48,7 +48,7 @@ const AppProvider = ({ children }) => {
   const registerUser = async (currUser) => {
     dispatch({ type: 'REGISTER_USER_BEGIN'})
     try {
-      const res = await axios.post('http://localhost:5000/api/v1/auth/register', currUser)
+      const res = await axios.post('/api/v1/auth/register', currUser)
       console.log(res)
       const { user, token, location } = res.data
       dispatch({
@@ -56,9 +56,9 @@ const AppProvider = ({ children }) => {
         payload: { user, token, location },
       })
       addUserToLocalStorage({ user, token, location })
-    } catch (err) {
-      console.log(err)
-      dispatch({ type: 'REGISTER_USER_ERROR', payload: { msg: err.res.data.msg}})
+    } catch (error) {
+      dispatch({ type: 'REGISTER_USER_ERROR', payload: { msg: error.res.data.msg}})
+      console.log(error.res.data.msg)
     }
     // console.log(currUser)
     clearAlert()

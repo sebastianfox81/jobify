@@ -1,7 +1,6 @@
 import User from '../models/User.js'
 import  statusCodes from 'http-status-codes'
-import { BadRequest } from '../errors/index.js'
-import { NotFound } from '../errors/index.js'
+import { BadRequest, UnAuthenticatedError, NotFound } from '../errors/index.js'
 
 const register = async (req, res, next) => {
 
@@ -14,35 +13,38 @@ const register = async (req, res, next) => {
     if (userAlreadyExists) {
       throw new BadRequest('Email already exists')
     }
-
     const user = await User.create({ name, email, password })
     const token = user.createJWT()
+
     res.status(statusCodes.default.CREATED).json({ user : {
       name: user.name,
       email: user.email,
       location: user.location,
       lastname: user.lastname
-    }, token })
+    },
+    token,
+    location: user.location
+  })
 
 }
 
-const login = async (req, res, err) => {
+const login = async (req, res) => {
 
-  try {
     const { email, password} = req.body;
-    const user = await User.findOne({ email }).select('+password')
-    console.log(user)
-    const isPasswordCorrect = user.comparePassword(password)
-
-    if (!isPasswordCorrect) {
-      res.status(400).json({ msg: 'Password Incorrect'})
+    if (!email || !password) {
+      throw new BadRequest('Please provide all values')
     }
-    res.status(200).json({ msg: 'Login successful'})
-  } catch (err) {
-    next(err)
-  }
-
-
+    const user = await User.findOne({ email }).select('+password')
+    if (!user) {
+      throw new UnAuthenticatedError('Invalid Credentials')
+    }
+    const isPasswordCorrect = user.comparePassword(password)
+    if (!isPasswordCorrect) {
+      throw new UnAuthenticatedError('Invalid Password')
+    }
+    const token = user.createJWT()
+    user.password = undefined;
+  res.status(statusCodes.default.CREATED).json({ user, token, location: user.location})
 }
 
 const updateUser = async (req, res) => {

@@ -26,8 +26,8 @@ const reducer = (state, action) => {
       isLoading: false,
       user: action.payload.user,
       token: action.payload.token,
-      userLocation: action.payload.location,
-      jobLocation: action.payload.location,
+      userLocation: action.payload.userLocation,
+      jobLocation: action.payload.userLocation,
       showAlert: true,
       alertType: 'success',
       alertText: 'New User Created! Redirecting...'

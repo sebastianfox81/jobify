@@ -12,8 +12,11 @@ import connectDB from './db/connect.js';
 import authRoutes from './routes/authRoutes.js';
 import jobsRoutes from './routes/jobsRoutes.js'
 
+// app.get('/', (req, res) => {
+//   res.json({ msg: 'Welcome!'})
+// })
 app.get('/api/v1', (req, res) => {
-  res.json({ msg: 'Welcome!'})
+  res.json({ msg: 'API'})
 })
 // MIDDLEWARE
 import  errorHandlerMiddleware  from './middleware/error-handler.js'
