@@ -48,26 +48,44 @@ const AppProvider = ({ children }) => {
   const registerUser = async (currUser) => {
     dispatch({ type: 'REGISTER_USER_BEGIN'})
     try {
-      const res = await axios.post('/api/v1/auth/register', currUser)
-      console.log(res)
-      const { user, token, location } = res.data
+      const response = await axios.post('/api/v1/auth/register', currUser)
+      console.log(response)
+      const { user, token, location } = response.data
       dispatch({
         type: 'REGISTER_USER_SUCCESS',
         payload: { user, token, location },
       })
       addUserToLocalStorage({ user, token, location })
     } catch (error) {
-      dispatch({ type: 'REGISTER_USER_ERROR', payload: { msg: error.res.data.msg}})
-      console.log(error.res.data.msg)
+      dispatch({ type: 'REGISTER_USER_ERROR', payload: { msg: error.response.data.msg}})
+      console.log(error.response.data.msg)
+    }
+    // console.log(currUser)
+    clearAlert()
+  }
+
+  const loginUser = async (currUser) => {
+    dispatch({ type: 'LOGIN_USER_BEGIN'})
+    try {
+      const response = await axios.post('/api/v1/auth/login', currUser)
+      console.log(response)
+      const { user, token, location } = response.data
+      dispatch({
+        type: 'LOGIN_USER_SUCCESS',
+        payload: { user, token, location },
+      })
+      addUserToLocalStorage({ user, token, location })
+    } catch (error) {
+      dispatch({ type: 'LOGIN_USER_ERROR', payload: { msg: error.response.data.msg}})
+      console.log(error.response.data.msg)
     }
     // console.log(currUser)
     clearAlert()
   }
 
 
-
   return (
-    <AppContext.Provider value={{ ...state, displayAlert, registerUser }}>
+    <AppContext.Provider value={{ ...state, displayAlert, registerUser, loginUser }}>
       {children}
     </AppContext.Provider>
   );
