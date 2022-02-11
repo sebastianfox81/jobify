@@ -42,14 +42,14 @@ const Register = () => {
     }
   }
 
-  // useEffect(() => {
-  //   if (user) {
-  //     setTimeout(() => {
-  //       navigate('/')
-  //       console.log('navigated!')
-  //     }, 3000)
-  //   }
-  // }, [user, navigate])
+  useEffect(() => {
+    if (user) {
+      setTimeout(() => {
+        navigate('/')
+        console.log('navigated!')
+      }, 3000)
+    }
+  }, [user, navigate])
 
 
   return (
