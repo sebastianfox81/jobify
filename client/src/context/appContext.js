@@ -6,7 +6,7 @@ const user = localStorage.getItem('user')
 const token = localStorage.getItem('token')
 const userLocation = localStorage.getItem('location')
 
-const initialState = {
+export const initialState = {
   isLoading: false,
   showAlert: false,
   alertText: "",
@@ -83,9 +83,12 @@ const AppProvider = ({ children }) => {
     clearAlert()
   }
 
-
+  const logoutUser = () => {
+    dispatch({ type: 'LOGOUT_USER'});
+    removeUserFromLocalStorage();
+  }
   return (
-    <AppContext.Provider value={{ ...state, displayAlert, registerUser, loginUser }}>
+    <AppContext.Provider value={{ ...state, displayAlert, registerUser, loginUser, logoutUser }}>
       {children}
     </AppContext.Provider>
   );

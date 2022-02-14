@@ -1,5 +1,7 @@
 // import { DISPLAY_ALERT } from './actions'
 
+import { initialState } from './appContext'
+
 const reducer = (state, action) => {
   if (action.type === "SHOW_ALERT") {
     return {
@@ -66,6 +68,15 @@ const reducer = (state, action) => {
       alertType: 'danger',
       alertText: action.payload.msg,
     };
+  }
+  if (action.type === 'LOGOUT_USER') {
+    return {
+      ...initialState,
+      user: null,
+      token: null,
+      jobLocation: '',
+      userLocation: '',
+    }
   }
   return state;
 };
