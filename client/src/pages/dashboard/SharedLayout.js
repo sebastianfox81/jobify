@@ -1,15 +1,20 @@
 import React from 'react';
 import { Outlet, Link } from 'react-router-dom';
+import { Navbar, BigSidebar, SmallSidebar } from '../../components';
 
 const SharedLayout = () => {
   return (
-  <div>
-    <nav>
-      <Link to='add-job'>add job</Link>
-      <Link to='all-jobs'>all jobs</Link>
-      </nav>
+  <main>
+      <SmallSidebar />
+      <BigSidebar />
+      <div>
+        <Navbar />
+        <div>
       <Outlet />
-  </div>
+
+        </div>
+      </div>
+  </main>
   )
 };
 

@@ -48,7 +48,7 @@ userSchema.pre('save', async function() {
   this.password = await bcrypt.hash(this.password, salt)
   console.log(this.password)
 })
-// JWT s
+// JWT `
 userSchema.methods.createJWT = function() {
   return jwt.sign({ userId: this._id }, process.env.JWT_SECRET, {expiresIn: process.env.JWT_LIFETIME} )
 }
