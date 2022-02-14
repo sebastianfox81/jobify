@@ -19,13 +19,15 @@ app.get('/api/v1', (req, res) => {
   res.json({ msg: 'API'})
 })
 // MIDDLEWARE
-import  errorHandlerMiddleware  from './middleware/error-handler.js'
+import errorHandlerMiddleware  from './middleware/error-handler.js'
+import authenticateUser from './middleware/auth.js'
+
 app.use(express.json());
 app.use(cors());
 
 
 app.use('/api/v1/auth', authRoutes)
-app.use('/api/v1/jobs', jobsRoutes)
+app.use('/api/v1/jobs', authenticateUser, jobsRoutes)
 
 app.use(errorHandlerMiddleware)
 
