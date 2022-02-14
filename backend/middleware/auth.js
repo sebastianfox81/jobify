@@ -13,7 +13,7 @@ const auth = async (req, res, next) => {
     req.user = { userId: payload.userId }
     next()
   } catch (error) {
-
+    res.status(401).json(error)
   }
 }
 
