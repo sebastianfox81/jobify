@@ -6,11 +6,6 @@ import { useGlobalContext } from '../../context/appContext';
 const Profile = () => {
   const { user, showAlert, displayAlert, updateUser, isLoading } = useGlobalContext();
 
-  // const [ name, setName ] = useState(user?.name);
-  // const [ email, setEmail ] = useState(user?.email);
-  // const [ lastName, setLastName ] = useState(user?.lastname);
-  // const [ location, setLocation ] = useState(user?.location);
-
   const [ values, setValues] = useState({
     name: user?.name,
     email: user?.email,
