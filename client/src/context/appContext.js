@@ -87,8 +87,22 @@ const AppProvider = ({ children }) => {
     dispatch({ type: 'LOGOUT_USER'});
     removeUserFromLocalStorage();
   }
+
+  const updateUser = async (currUser) => {
+    dispatch({ type: 'UPDATE_USER_BEGIN'})
+    try {
+      const res = await axios.patch('/api/v1/auth/updateUser', currUser)
+      const { user, location, token} = res.data;
+      dispatch({ type: 'UPDATE_USER_SUCCESS', payload: { user, token, location }});
+      addUserToLocalStorage({ user, location, token })
+    } catch (error) {
+      dispatch({ type: 'UPDATE_USER_ERROR', payload: { msg: error.response.data.msg}})
+      console.log(error.response)
+    }
+    clearAlert()
+  }
   return (
-    <AppContext.Provider value={{ ...state, displayAlert, registerUser, loginUser, logoutUser }}>
+    <AppContext.Provider value={{ ...state, displayAlert, registerUser, loginUser, logoutUser, updateUser }}>
       {children}
     </AppContext.Provider>
   );

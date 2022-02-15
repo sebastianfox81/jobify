@@ -50,7 +50,7 @@ const login = async (req, res) => {
 const updateUser = async (req, res) => {
   const { email, name, lastname, location } = req.body;
   if (!email || !name || !lastname || !location) {
-    throw new BadRequest('')
+    throw new BadRequest('Please Provide All Vaules')
   }
   const user = await User.findOne({ _id: req.user.userId});
 

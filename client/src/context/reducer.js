@@ -60,6 +60,7 @@ const reducer = (state, action) => {
       alertText: 'Login Successful! Redirecting...'
     };
   }
+
   if (action.type === "LOGIN_USER_ERROR") {
     return {
       ...state,
@@ -77,6 +78,32 @@ const reducer = (state, action) => {
       jobLocation: '',
       userLocation: '',
     }
+  }
+
+  if (action.type === "UPDATE_USER_BEGIN") {
+    return { ...state, isLoading: true };
+  }
+  if (action.type === "UPDATE_USER_SUCCESS") {
+    return {
+      ...state,
+      isLoading: false,
+      user: action.payload.user,
+      token: action.payload.token,
+      userLocation: action.payload.userLocation,
+      jobLocation: action.payload.userLocation,
+      showAlert: true,
+      alertType: 'success',
+      alertText: 'User Profile Updated!'
+    };
+  }
+  if (action.type === "UPDATE_USER_ERROR") {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: 'danger',
+      alertText: action.payload.msg,
+    };
   }
   return state;
 };
