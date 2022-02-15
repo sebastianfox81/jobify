@@ -8,9 +8,12 @@ const createJob =  async (req, res) => {
   if (!position || !company) {
     throw new BadRequest('Please provide all values')
   }
+  req.body.createdBy = req.user.userId;
+  const job = await Job.create(req.body)
 
-  res.send('create new job')
+  res.status(statusCodes.default.CREATED).json({ job })
 }
+
 const getAllJobs = async (req, res) => {
   res.send('fetch jobs')
 }

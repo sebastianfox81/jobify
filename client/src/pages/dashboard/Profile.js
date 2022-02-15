@@ -27,7 +27,6 @@ const Profile = () => {
     //   return
     // }
     updateUser({ name, email, lastname, location})
-    console.log('submit')
   }
 
   return (

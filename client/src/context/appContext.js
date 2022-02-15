@@ -93,7 +93,7 @@ const AppProvider = ({ children }) => {
     try {
       const res = await axios.patch('/api/v1/auth/updateUser', currUser)
       const { user, location, token} = res.data;
-      dispatch({ type: 'UPDATE_USER_SUCCESS', payload: { user, token, location }});
+      dispatch({ type: 'UPDATE_USER_SUCCESS', payload: { user, location, token }});
       addUserToLocalStorage({ user, location, token })
     } catch (error) {
       dispatch({ type: 'UPDATE_USER_ERROR', payload: { msg: error.response.data.msg}})
