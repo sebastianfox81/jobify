@@ -1,4 +1,14 @@
+import Job from '../models/Job.js';
+import  statusCodes  from 'http-status-codes'
+import { BadRequest, UnAuthenticatedError, NotFound } from '../errors/index.js'
+
 const createJob =  async (req, res) => {
+
+  const { position, company } = req.body;
+  if (!position || !company) {
+    throw new BadRequest('Please provide all values')
+  }
+
   res.send('create new job')
 }
 const getAllJobs = async (req, res) => {

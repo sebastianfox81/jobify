@@ -3,16 +3,20 @@ import jwt from 'jsonwebtoken';
 
 const auth = async (req, res, next) => {
   const authHeader = req.headers.authorization
+  // console.log(authHeader)
   if (!authHeader || !authHeader.startsWith('Bearer')) {
     throw new UnAuthenticatedError('Authentication Invalid')
   }
+
   const token = authHeader.split(' ')[1];
+
   try {
     const payload = jwt.verify(token, process.env.JWT_SECRET)
-    req.user = { userId: payload.userId }
+    req.user = { userId: payload.userId}
+    console.log(req.user.userId)
     next()
   } catch (error) {
-    res.status(401).json(error)
+    throw new UnAuthenticatedError('Authentication Invalid')
   }
 }
 

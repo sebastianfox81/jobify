@@ -48,24 +48,24 @@ const login = async (req, res) => {
 }
 
 const updateUser = async (req, res) => {
-  const { email, name, lastname, location } = req.body;
-  if (!email || !name || !lastname || !location) {
-    throw new BadRequest('Please Provide All Vaules')
-  }
-  const user = await User.findOne({ _id: req.user.userId});
+  // const { email, name, lastname, location } = req.body;
+  // if (!email || !name || !lastname || !location) {
+  //   throw new BadRequest('Please Provide All Vaules')
+  // }
+  // const user = await User.findOne({ _id: req.user.userId});
 
-  user.email = email
-  user.name = name
-  user.lastname = lastname
-  user.location = location
+  // user.email = email
+  // user.name = name
+  // user.lastname = lastname
+  // user.location = location
 
-  await user.save();
+  // await user.save();
   // New Token is optional
   // const token = user.createJWT()
 
-  res.status(statusCodes.default.CREATED).json({ user, location: user.location})
+  // res.status(statusCodes.default.CREATED).json({ user, location: user.location})
 
-  console.log(req.user)
+  // console.log(req.user)
   res.send('update user')
 }
 
