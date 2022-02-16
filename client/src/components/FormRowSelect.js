@@ -1,14 +1,13 @@
 import React from "react";
 
-const FormRowSelect = ({ labelText, id, value, handleChange, list}) => {
+const FormRowSelect = ({ labelText, name, value, handleChange, list}) => {
   return (
     <div className="form-row">
-      <label htmlFor={id} className="form-label">
-        {labelText || id}
+      <label htmlFor={name} className="form-label">
+        {labelText || name}
       </label>
       <select
-        name="jobType"
-        id={id}
+        name={name}
         className="form-select"
         value={value}
         onChange={handleChange}

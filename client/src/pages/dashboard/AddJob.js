@@ -12,12 +12,13 @@ const AddJob = () => {
     jobLocation,
     jobType,
     jobTypeOptions,
-    status,
+    statusType,
     statusOptions,
     handleChange,
     clearValues,
     createJob,
     editJob,
+    handleJobChange
   } = useGlobalContext()
 
   console.log(jobLocation)
@@ -36,10 +37,9 @@ const AddJob = () => {
     // createJob()
   }
   const handleJobInput = (e) => {
-    const name = e.target.id
+    const name = e.target.name
     const value = e.target.value
-    console.log(`${name}: ${value}`)
-    // handleChange({ name, value })
+    handleJobChange({ name, value })
   }
 
   return (
@@ -51,14 +51,14 @@ const AddJob = () => {
           {/* position */}
           <FormRow
             type='text'
-            id='position'
+            name='position'
             value={position}
             handleChange={handleJobInput}
           />
           {/* company */}
           <FormRow
             type='text'
-            id='company'
+            name='company'
             value={company}
             handleChange={handleJobInput}
           />
@@ -66,14 +66,25 @@ const AddJob = () => {
           <FormRow
             type='text'
             labelText='job location'
-            id='jobLocation'
+            name='jobLocation'
             value={jobLocation}
             handleChange={handleJobInput}
           />
           {/* job status */}
-          <FormRowSelect id='status' value={status} handleChange={handleJobInput} list={statusOptions}/>
+          <FormRowSelect
+              name='statusType'
+              value={statusType}
+              handleChange={handleJobInput}
+              list={statusOptions}
+          />
           {/* job type */}
-          <FormRowSelect id='jobType' labelText='Job type' value={jobType} handleChange={handleJobInput} list={jobTypeOptions}/>
+          <FormRowSelect
+              name='jobType'
+              value={jobType}
+              labelText='Job type'
+              handleChange={handleJobInput}
+              list={jobTypeOptions}
+          />
           {/* btn container */}
           <div className='btn-container'>
             <button

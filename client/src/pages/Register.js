@@ -24,7 +24,7 @@ const Register = () => {
 
   const handleChange = (e) => {
     setValues({
-      ...values, [e.target.id]: e.target.value
+      ...values, [e.target.name]: e.target.value
     })
   }
 
@@ -58,10 +58,10 @@ const Register = () => {
     {showAlert && <Alert />}
     <form className="form"onSubmit={handleSubmit}>
       {!isMember &&
-    <FormRow type="text" value={name} id="name" handleChange={handleChange}/>
+    <FormRow type="text" value={name} name="name" handleChange={handleChange}/>
       }
-    <FormRow type="email" value={email} id="email" handleChange={handleChange}/>
-    <FormRow type="password" value={password} id="password" handleChange={handleChange}/>
+    <FormRow type="email" value={email} name="email" handleChange={handleChange}/>
+    <FormRow type="password" value={password} name="password" handleChange={handleChange}/>
       <button type="submit" className="btn" disabled={isLoading}>Submit</button>
     <p>
       {isMember ? 'Not a member yet?' : 'Already a member'}

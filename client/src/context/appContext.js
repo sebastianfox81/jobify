@@ -109,8 +109,12 @@ const AppProvider = ({ children }) => {
     }
     clearAlert()
   }
+
+  const handleJobChange = ({ name, value}) => {
+    dispatch({ type: 'HANDLE_JOB_CHANGE', payload: { name, value}})
+  }
   return (
-    <AppContext.Provider value={{ ...state, displayAlert, registerUser, loginUser, logoutUser, updateUser }}>
+    <AppContext.Provider value={{ ...state, displayAlert, registerUser, loginUser, logoutUser, updateUser, handleJobChange }}>
       {children}
     </AppContext.Provider>
   );

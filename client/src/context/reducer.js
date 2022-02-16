@@ -105,6 +105,12 @@ const reducer = (state, action) => {
       alertText: action.payload.msg,
     };
   }
+  if (action.type === 'HANDLE_JOB_CHANGE') {
+    return {
+      ...state,
+      [action.payload.name]: action.payload.value
+    }
+  }
   return state;
 };
 
