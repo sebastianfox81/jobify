@@ -12,9 +12,17 @@ export const initialState = {
   alertText: "",
   alertType: "",
   user: user ? JSON.parse(user) : null,
-  token: null,
+  token: token,
   userLocation: userLocation || '',
+  isEditing: false,
+  editJobId: '',
+  position: '',
+  company: '',
   jobLocation: userLocation || '',
+  jobTypeOptions: ['full-time', 'part-time', 'remote', 'internship'],
+  jobType: 'fulltime',
+  statusOptions: ['interview', 'declined', 'pending'],
+  statusType: 'pending'
 };
 
 const AppContext = React.createContext();
