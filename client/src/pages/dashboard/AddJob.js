@@ -18,10 +18,8 @@ const AddJob = () => {
     clearValues,
     createJob,
     editJob,
-    handleJobChange
-  } = useGlobalContext()
-
-  console.log(jobLocation)
+    handleJobChange,
+  } = useGlobalContext();
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -34,7 +32,7 @@ const AddJob = () => {
     //   editJob()
     //   return
     // }
-    // createJob()
+    createJob()
   }
   const handleJobInput = (e) => {
     const name = e.target.name

@@ -111,6 +111,40 @@ const reducer = (state, action) => {
       [action.payload.name]: action.payload.value
     }
   }
+  if (action.type === 'CLEAR_VALUES') {
+    const initialState = {
+      isEditing: false,
+      editJobId: '',
+      position: '',
+      company: '',
+      jobLocation: state.userLocation,
+      jobType: 'fulltime',
+      statusType: 'pending'
+    }
+    return {...state, ...initialState}
+  }
+
+  if (action.type === 'CREATE_JOB_BEGIN') {
+    return {...state, isLoading: true}
+  }
+  if (action.type === 'CREATE_JOB_SUCCESS') {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: 'success',
+      alertText: 'New Job Created',
+    }
+  }
+  if (action.type === 'CREATE_JOB_ERROR') {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: 'danger',
+      alertText: action.payload.msg,
+    }
+  }
   return state;
 };
 

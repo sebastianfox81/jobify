@@ -113,8 +113,28 @@ const AppProvider = ({ children }) => {
   const handleJobChange = ({ name, value}) => {
     dispatch({ type: 'HANDLE_JOB_CHANGE', payload: { name, value}})
   }
+
+  const clearValues = () => {
+    dispatch({ type: 'CLEAR_VALUES'})
+  }
+
+  const createJob = async () => {
+    dispatch({ type: 'CREATE_JOB_BEGIN'});
+    try {
+      const { position, company, jobLocation, jobType, statusType } = state;
+      const job = { position, company, jobLocation, jobType, statusType }
+      await axios.post('/api/v1/jobs', job);
+      dispatch({ type: 'CREATE_JOB_SUCCESS'})
+      dispatch({ type: 'CLEAR_VALUES'})
+    } catch (error) {
+      if (error.response.status === 401) return;
+      dispatch({ type: 'CREATE_JOB_ERROR', payload: { msg: error.response.data.msg }})
+    }
+    clearAlert()
+  }
+
   return (
-    <AppContext.Provider value={{ ...state, displayAlert, registerUser, loginUser, logoutUser, updateUser, handleJobChange }}>
+    <AppContext.Provider value={{ ...state, displayAlert, registerUser, loginUser, logoutUser, updateUser, handleJobChange, clearValues, createJob }}>
       {children}
     </AppContext.Provider>
   );
