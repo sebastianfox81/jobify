@@ -1,4 +1,4 @@
-import { FormRow, Alert } from '../../components'
+import { FormRow, Alert, FormRowSelect } from '../../components'
 import { useGlobalContext } from '../../context/appContext'
 
 const AddJob = () => {
@@ -71,20 +71,9 @@ const AddJob = () => {
             handleChange={handleJobInput}
           />
           {/* job status */}
-          {/* <FormRowSelect
-            name='status'
-            value={status}
-            handleChange={handleJobInput}
-            list={statusOptions}
-          /> */}
+          <FormRowSelect id='status' value={status} handleChange={handleJobInput} list={statusOptions}/>
           {/* job type */}
-          {/* <FormRowSelect
-            name='jobType'
-            labelText='job type'
-            value={jobType}
-            handleChange={handleJobInput}
-            list={jobTypeOptions}
-          /> */}
+          <FormRowSelect id='jobType' labelText='Job type' value={jobType} handleChange={handleJobInput} list={jobTypeOptions}/>
           {/* btn container */}
           <div className='btn-container'>
             <button
