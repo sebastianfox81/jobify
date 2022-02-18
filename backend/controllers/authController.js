@@ -31,28 +31,37 @@ const register = async (req, res, next) => {
 const login = async (req, res) => {
 
     const { email, password} = req.body;
+
     if (!email || !password) {
       throw new BadRequest('Please provide all values')
     }
+
     const user = await User.findOne({ email }).select('+password')
+
     if (!user) {
       throw new UnAuthenticatedError('Invalid Credentials')
     }
+
     const isPasswordCorrect = await user.comparePassword(password)
+
     if (!isPasswordCorrect) {
       throw new UnAuthenticatedError('Invalid Password')
     }
+
     const token = user.createJWT()
+
     user.password = undefined;
-  res.status(statusCodes.default.CREATED).json({ user, token, location: user.location})
+    res.status(statusCodes.default.CREATED).json({ user, token, location: user.location})
 }
 
 const updateUser = async (req, res) => {
+  const { id } = req.params.id
+
   const { email, name, lastname, location } = req.body;
   if (!email || !name || !lastname || !location) {
     throw new BadRequest('Please Provide All Vaules')
   }
-  const user = await User.findOne({ _id: req.user.userId});
+  const user = await User.findOne({ id });
 
   user.email = email
   user.name = name
@@ -62,10 +71,8 @@ const updateUser = async (req, res) => {
   await user.save();
   // New Token is optional
   const token = user.createJWT()
-
   res.status(statusCodes.default.CREATED).json({ user, token, location: user.location})
 
-  console.log(req.user)
 }
 
 const deleteUser = async (req, res) => {

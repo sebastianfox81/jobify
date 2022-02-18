@@ -19,6 +19,7 @@ const AddJob = () => {
     createJob,
     editJob,
     handleJobChange,
+    user
   } = useGlobalContext();
 
   const handleSubmit = (e) => {

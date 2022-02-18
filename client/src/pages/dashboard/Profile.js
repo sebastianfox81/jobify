@@ -5,7 +5,8 @@ import { useGlobalContext } from '../../context/appContext';
 
 const Profile = () => {
   const { user, showAlert, displayAlert, updateUser, isLoading } = useGlobalContext();
-
+//  console.log(user._id)
+//  console.log(user)
   const [ values, setValues] = useState({
     name: user?.name,
     email: user?.email,
@@ -14,9 +15,8 @@ const Profile = () => {
   })
 
   const { name, email, lastname, location } = values;
-
   const handleChange = (e) => {
-    setValues({...values, [e.target.id]: e.target.value})
+    setValues({...values, [e.target.name]: e.target.value})
   }
 
   const handleSubmit = (e) => {
@@ -26,7 +26,7 @@ const Profile = () => {
     //   displayAlert()
     //   return
     // }
-    updateUser({ name, email, lastname, location})
+    updateUser(user._id, { name, email, lastname, location })
   }
 
   return (
@@ -37,10 +37,10 @@ const Profile = () => {
       </h3>
       {showAlert && <Alert />}
       <div>
-        <FormRow type='text' id='name' value={name} handleChange={handleChange}/>
-        <FormRow type='text' id='email' value={email} handleChange={handleChange}/>
-        <FormRow type='text' id='lastname' value={lastname} handleChange={handleChange}/>
-        <FormRow type='text' id='location' value={location} handleChange={handleChange}/>
+        <FormRow type='text' name='name' value={name} handleChange={handleChange}/>
+        <FormRow type='text' name='email' value={email} handleChange={handleChange}/>
+        <FormRow type='text' name='lastname' value={lastname} handleChange={handleChange}/>
+        <FormRow type='text' name='location' value={location} handleChange={handleChange}/>
       </div>
       <button type='submit' disabled={isLoading}>{isLoading ? 'Please wait...' : 'Save Changes'}</button>
       </form>

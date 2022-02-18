@@ -19,8 +19,8 @@ export const initialState = {
   position: '',
   company: '',
   jobLocation: userLocation || '',
-  jobTypeOptions: ['full-time', 'part-time', 'remote', 'internship'],
-  jobType: 'fulltime',
+  jobTypeOptions: ['full time', 'part time', 'remote', 'internship'],
+  jobType: 'full time',
   statusOptions: ['interview', 'declined', 'pending'],
   statusType: 'pending'
 };
@@ -44,7 +44,7 @@ const AppProvider = ({ children }) => {
   const addUserToLocalStorage = ({ user, token, location }) => {
     localStorage.setItem('user', JSON.stringify(user))
     localStorage.setItem('token', token)
-    localStorage.setItem('location', location)
+    localStorage.setItem('location', userLocation)
   }
 
   const removeUserFromLocalStorage = () => {
@@ -96,16 +96,24 @@ const AppProvider = ({ children }) => {
     removeUserFromLocalStorage();
   }
 
-  const updateUser = async (currUser) => {
+  const updateUser = async (id, currUser) => {
     dispatch({ type: 'UPDATE_USER_BEGIN'})
     try {
-      const res = await axios.patch('/api/v1/auth/updateUser', currUser)
+      const res = await axios.patch(`/api/v1/auth/updateUser/${id}`, currUser)
+
       const { user, location, token} = res.data;
-      dispatch({ type: 'UPDATE_USER_SUCCESS', payload: { user, location, token }});
+
+      dispatch({
+        type: 'UPDATE_USER_SUCCESS',
+        payload: { user, location, token },
+
+      });
       addUserToLocalStorage({ user, location, token })
     } catch (error) {
-      dispatch({ type: 'UPDATE_USER_ERROR', payload: { msg: error.response.data.msg}})
-      console.log(error.response)
+      dispatch({
+        type: 'UPDATE_USER_ERROR',
+        payload: { msg: error.response.data.msg},
+      })
     }
     clearAlert()
   }
@@ -121,9 +129,11 @@ const AppProvider = ({ children }) => {
   const createJob = async () => {
     dispatch({ type: 'CREATE_JOB_BEGIN'});
     try {
+      const id = state.user._id;
+      console.log(id)
       const { position, company, jobLocation, jobType, statusType } = state;
       const job = { position, company, jobLocation, jobType, statusType }
-      await axios.post('/api/v1/jobs', job);
+      await axios.post(`/api/v1/jobs/${id}`, job);
       dispatch({ type: 'CREATE_JOB_SUCCESS'})
       dispatch({ type: 'CLEAR_VALUES'})
     } catch (error) {

@@ -1,39 +1,29 @@
 import express  from 'express';
-// import cors from 'cors';
+const app = express();
 import dotenv from 'dotenv'
 dotenv.config();
+import cors from 'cors';
 import morgan from 'morgan'
 import 'express-async-errors'
 
-const app = express();
-
+// Db connection
 import connectDB from './db/connect.js';
-
+// Routers
 import authRoutes from './routes/authRoutes.js';
 import jobsRoutes from './routes/jobsRoutes.js'
 
-// app.get('/', (req, res) => {
-//   res.json({ msg: 'Welcome!'})
-// })
-app.get('/api/v1', (req, res) => {
-  res.json({ msg: 'API'})
-})
 // MIDDLEWARE
 import errorHandlerMiddleware  from './middleware/error-handler.js'
-import authenticateUser from './middleware/auth.js'
+// import authenticateUser from './middleware/auth.js'
 
+app.use(morgan('dev'))
 app.use(express.json());
-// app.use(cors());
-
+app.use(cors());
 
 app.use('/api/v1/auth', authRoutes)
-app.use('/api/v1/jobs', jobsRoutes)
+app.use('/api/v1/jobs',jobsRoutes)
 
 app.use(errorHandlerMiddleware)
-
-if (process.env.NODE_ENV !== 'production') {
-  app.use(morgan('dev'))
-}
 
 const port = process.env.PORT || 5000
 
