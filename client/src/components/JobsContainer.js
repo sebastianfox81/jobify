@@ -27,7 +27,7 @@ const JobsContianer = () => {
   }
 
   return (
-    <div>
+    <div className='container'>
     <h5>{totalJobs} Job{jobs.length > 1 && 's'} Found</h5>
     <div className='jobs'>
       {jobs.map((job) => {

@@ -10,16 +10,16 @@ const Job = ({
   jobLocation,
   jobType,
   createdAt,
-  statusType,
+  status,
 }) => {
-  const { setEditJob, deleteJob } = useGlobalContext()
+  const { setEditJob, deleteJob,  } = useGlobalContext()
 
   let date = moment(createdAt)
   date = date.format('MMM Do, YYYY')
   return (
-    <div>
+    <div >
       <header>
-        <div className='main-icon'>{company.charAt(0)}</div>
+        <div className='main-icon'><h2>{company.charAt(0)}</h2></div>
         <div className='info'>
           <h5>{position}</h5>
           <p>{company}</p>
@@ -27,10 +27,10 @@ const Job = ({
       </header>
       <div className='content'>
         <div className='content-center'>
-          {jobLocation}
-          {date}
-          {jobType}
-          <div className={`status ${statusType}`}>{statusType}</div>
+          <h5>{jobLocation}</h5>
+          <h5>{date}</h5>
+          <h5>{jobType}</h5>
+          <div className={`status ${status}`}>{status}</div>
         </div>
         <footer>
           <div className='actions'>
