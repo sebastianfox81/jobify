@@ -89,8 +89,8 @@ const reducer = (state, action) => {
       isLoading: false,
       user: action.payload.user,
       token: action.payload.token,
-      userLocation: action.payload.location,
-      jobLocation: action.payload.location,
+      userLocation: action.payload.userLocation,
+      jobLocation: action.payload.userLocation,
       showAlert: true,
       alertType: 'success',
       alertText: 'User Profile Updated!'
@@ -145,6 +145,19 @@ const reducer = (state, action) => {
       alertText: action.payload.msg,
     }
   }
+  if (action.type === 'GET_JOBS_BEGIN') {
+    return {...state, isLoading: true, showAlert: false}
+  }
+  if (action.type === 'GET_JOBS_SUCCESS') {
+    return {
+      ...state,
+      isLoading: false,
+      jobs: action.payload.jobs,
+      totalJobs: action.payload.totalJobs,
+      numOfPages: action.payload.numOfPages
+    }
+  }
+
   return state;
 };
 

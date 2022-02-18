@@ -24,6 +24,7 @@ const getAllJobs = async (req, res) => {
     totalJobs: jobs.length,
     numOfPages: 1
   })
+  
 }
 const updateJob = async (req, res) => {
   res.send('update job')

@@ -1,4 +1,4 @@
-import React, { useContext, useReducer } from "react";
+import React, { useContext, useReducer, useEffect } from "react";
 import reducer from "./reducer";
 import axios from 'axios';
 
@@ -22,7 +22,11 @@ export const initialState = {
   jobTypeOptions: ['full time', 'part time', 'remote', 'internship'],
   jobType: 'full time',
   statusOptions: ['interview', 'declined', 'pending'],
-  statusType: 'pending'
+  statusType: 'pending',
+  jobs: [],
+  totalJobs: 0,
+  numOfPages: 1,
+  page: 1
 };
 
 const AppContext = React.createContext();
@@ -142,9 +146,31 @@ const AppProvider = ({ children }) => {
     }
     clearAlert()
   }
+  const getAllJobs = async () => {
+    dispatch({ type: 'GET_JOBS_BEGIN'});
+    try {
+      const id = state.user._id
+      const res = await axios.get(`api/v1/jobs/${id}`)
+      const { jobs, totalJobs, numOfPages } = res.data
+      dispatch({
+        type: 'GET_JOBS_SUCCESS',
+        payload: {
+          jobs,
+          totalJobs,
+          numOfPages
+        }
+      })
+      clearAlert();
+      console.log(res.data.jobs)
+    } catch (error) {
+      console.log(error.response)
+      // logoutUser();
+    }
+  }
+
 
   return (
-    <AppContext.Provider value={{ ...state, displayAlert, registerUser, loginUser, logoutUser, updateUser, handleJobChange, clearValues, createJob }}>
+    <AppContext.Provider value={{ ...state, displayAlert, registerUser, loginUser, logoutUser, updateUser, handleJobChange, clearValues, createJob, getAllJobs }}>
       {children}
     </AppContext.Provider>
   );
