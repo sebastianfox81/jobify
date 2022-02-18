@@ -183,8 +183,15 @@ const AppProvider = ({ children }) => {
   const editJob = () => {
     console.log('edit job')
   }
-  const deleteJob = (id) => {
-    console.log(`delete job: ${id}`);
+  const deleteJob = async (jobId) => {
+    dispatch({ type: 'DELETE_JOB_BEGIN'})
+    try {
+      await axios.delete(`/api/v1/jobs/${jobId}`)
+      getAllJobs()
+    } catch (error) {
+      console.log(error.response)
+      logoutUser()
+    }
   };
 
   return (

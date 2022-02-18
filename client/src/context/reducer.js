@@ -173,6 +173,13 @@ const reducer = (state, action) => {
       jobType
     }
   }
+  if (action.type === 'DELETE_JOB_BEGIN') {
+    return {
+      ...state,
+    isLoading: true
+    }
+  }
+  
   return state;
 };
 
