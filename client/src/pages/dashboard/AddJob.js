@@ -29,10 +29,10 @@ const AddJob = () => {
       displayAlert()
       return
     }
-    // if (isEditing) {
-    //   editJob()
-    //   return
-    // }
+    if (isEditing) {
+      editJob()
+      return
+    }
     createJob()
   }
   const handleJobInput = (e) => {

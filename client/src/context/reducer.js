@@ -157,7 +157,22 @@ const reducer = (state, action) => {
       numOfPages: action.payload.numOfPages
     }
   }
+  if (action.type === 'SET_EDIT_JOB') {
 
+    const job = state.jobs.find((job) => job._id === action.payload)
+    console.log(job)
+    const { _id, position, jobLocation, company, statusType, jobType } = job;
+    return {
+      ...state,
+      isEditing: true,
+      editJobId: _id,
+      position,
+      jobLocation,
+      company,
+      statusType,
+      jobType
+    }
+  }
   return state;
 };
 
