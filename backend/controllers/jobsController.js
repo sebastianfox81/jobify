@@ -44,8 +44,15 @@ const updateJob = async (req, res) => {
   res.status(statusCodes.default.OK).json({ updatedJob })
 }
 const deleteJob = async (req, res) => {
-  res.send('deleteJob')
+  const { id } = req.params;
+  const job = await Job.findOne({ _id: id })
+  if (!job) {
+    throw new NotFound(`No job with id : ${id}`)
+  }
+  await job.remove();
+  res.status(statusCodes.default.OK).json({job})
 }
+
 const showStats = async (req, res) => {
   res.send('show stats')
 }
