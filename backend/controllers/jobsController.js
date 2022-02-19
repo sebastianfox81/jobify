@@ -19,14 +19,42 @@ const createJob =  async (req, res) => {
 }
 
 const getAllJobs = async (req, res) => {
-  const jobs = await Job.find({ createdBy: req.params.user})
-  res.status(statusCodes.default.OK).json({
-    jobs,
-    totalJobs: jobs.length,
-    numOfPages: 1
-  })
+  const { statusType, jobType, search, sort } = req.query
+
+  const queryObject = {
+    createdBy: req.params.user
+  }
+  // ADD STUFF BASED ON CONDITIONS
+  if (statusType !== 'all') {
+    queryObject.statusType = statusType
+  }
+  if (jobType !== 'all') {
+    queryObject.jobType = jobType
+  }
+  if (search) {
+    queryObject.position = { $regex: search, $options: 'i' }
+  }
+  // NO AWAIT
+  let result = Job.find(queryObject)
+
+  // CHAIN SORT CONDITIONS
+  if (sort === 'latest') {
+    result = result.sort('-createdAt')
+  }
+  if (sort === 'oldest') {
+    result = result.sort('-reatedAt')
+  }
+  if (sort === 'a-z') {
+    result = result.sort('position')
+  }
+  if (sort === 'z-a') {
+    result = result.sort('-position')
+  }
+  const jobs = await result
+ res.status(statusCodes.default.OK).json({ jobs, totalJobs: jobs.length, numOfPages: 1})
 
 }
+
 const updateJob = async (req, res) => {
   const { id } = req.params
   const { company, position } = req.body;
