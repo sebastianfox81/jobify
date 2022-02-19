@@ -61,7 +61,6 @@ const AppProvider = ({ children }) => {
     dispatch({ type: "REGISTER_USER_BEGIN" });
     try {
       const response = await axios.post("/api/v1/auth/register", currUser);
-      console.log(response);
       const { user, token, location } = response.data;
       dispatch({
         type: "REGISTER_USER_SUCCESS",
@@ -75,7 +74,6 @@ const AppProvider = ({ children }) => {
       });
       console.log(error.response.data.msg);
     }
-    // console.log(currUser)
     clearAlert();
   };
 
@@ -154,11 +152,12 @@ const AppProvider = ({ children }) => {
     }
     clearAlert();
   };
+
   const getAllJobs = async () => {
     dispatch({ type: "GET_JOBS_BEGIN" });
     try {
-      const id = state.user._id;
-      const res = await axios.get(`api/v1/jobs/${id}`);
+      const userId = state.user._id;
+      const res = await axios.get(`api/v1/jobs/${userId}`);
       const { jobs, totalJobs, numOfPages } = res.data;
       dispatch({
         type: "GET_JOBS_SUCCESS",
@@ -176,10 +175,12 @@ const AppProvider = ({ children }) => {
     }
 
   };
+
   const setEditJob = (id) => {
     dispatch({ type: 'SET_EDIT_JOB', payload: id})
     console.log(`set edit job: ${id}`);
   };
+
   const editJob = async () => {
     dispatch({ type: 'EDIT_JOB_BEGIN'})
     try {

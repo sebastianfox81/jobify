@@ -10,7 +10,7 @@ const Job = ({
   jobLocation,
   jobType,
   createdAt,
-  status,
+  statusType,
 }) => {
   const { setEditJob, deleteJob,  } = useGlobalContext()
 
@@ -30,7 +30,7 @@ const Job = ({
           <h5>{jobLocation}</h5>
           <h5>{date}</h5>
           <h5>{jobType}</h5>
-          <div className={`status ${status}`}>{status}</div>
+          <div className={`status ${statusType}`}>{statusType}</div>
         </div>
         <footer>
           <div className='actions'>

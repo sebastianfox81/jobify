@@ -2,6 +2,7 @@ import Job from '../models/Job.js';
 import User from '../models/User.js';
 import  statusCodes  from 'http-status-codes'
 import { BadRequest, UnAuthenticatedError, NotFound } from '../errors/index.js'
+import mongoose from 'mongoose'
 
 const createJob =  async (req, res) => {
 
