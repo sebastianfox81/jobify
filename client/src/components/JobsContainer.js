@@ -1,13 +1,14 @@
 import React, { useEffect } from 'react'
 import { useGlobalContext } from '../context/appContext';
 import Job from './Job'
+import PageBtnContainer from './PageBtnContainer'
 
 const JobsContianer = () => {
-  const { getAllJobs, jobs, isLoading, page, totalJobs, search, searchStatus, searchType, sort } = useGlobalContext();
+  const { getAllJobs, jobs, isLoading, page, totalJobs, search, searchStatus, searchType, sort, numOfPages } = useGlobalContext();
 
   useEffect(() => {
     getAllJobs()
-  },[search, searchStatus, searchType, sort])
+  },[page, search, searchStatus, searchType, sort])
 
     if (isLoading) {
 
@@ -36,7 +37,7 @@ const JobsContianer = () => {
         )
       })}
     </div>
-
+      {numOfPages > 1 && <PageBtnContainer />}
     </div>
   )
 

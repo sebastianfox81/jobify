@@ -159,9 +159,9 @@ const AppProvider = ({ children }) => {
   };
 
   const getAllJobs = async () => {
-    const { search, searchStatus, searchType, sort } = state;
+    const { search, searchStatus, searchType, sort, page } = state;
 
-    let searchUrl = `?statusType=${searchStatus}&jobType=${searchType}&${sort}`;
+    let searchUrl = `?page=${page}&statusType=${searchStatus}&jobType=${searchType}&${sort}`;
     if (search) {
       searchUrl = searchUrl + `&search=${search}`
     }
@@ -227,6 +227,10 @@ const AppProvider = ({ children }) => {
     dispatch({ type: 'CLEAR_FILTERS'})
   }
 
+  const changePage = (page) => {
+    dispatch( { type: 'CHANGE_PAGE', payload: { page } })
+  }
+
   return (
     <AppContext.Provider
       value={{
@@ -243,7 +247,8 @@ const AppProvider = ({ children }) => {
         setEditJob,
         editJob,
         deleteJob,
-        clearFilters
+        clearFilters,
+        changePage
       }}
     >
       {children}
