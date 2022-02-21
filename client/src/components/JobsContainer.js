@@ -3,11 +3,11 @@ import { useGlobalContext } from '../context/appContext';
 import Job from './Job'
 
 const JobsContianer = () => {
-  const { getAllJobs, jobs, isLoading, page, totalJobs } = useGlobalContext();
+  const { getAllJobs, jobs, isLoading, page, totalJobs, search, searchStatus, searchType, sort } = useGlobalContext();
 
   useEffect(() => {
     getAllJobs()
-  },[])
+  },[search, searchStatus, searchType, sort])
 
     if (isLoading) {
 

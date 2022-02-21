@@ -27,6 +27,11 @@ export const initialState = {
   totalJobs: 0,
   numOfPages: 1,
   page: 1,
+  search: '',
+  searchStatus: 'all',
+  searchType: 'all',
+  sort: 'latest',
+  sortOptions: ['lastest', 'oldest', 'a-z', 'z-a']
 };
 
 const AppContext = React.createContext();
@@ -154,10 +159,17 @@ const AppProvider = ({ children }) => {
   };
 
   const getAllJobs = async () => {
+    const { search, searchStatus, searchType, sort } = state;
+
+    let searchUrl = `?statusType=${searchStatus}&jobType=${searchType}&${sort}`;
+    if (search) {
+      searchUrl = searchUrl + `&search=${search}`
+    }
+
     dispatch({ type: "GET_JOBS_BEGIN" });
     try {
       const userId = state.user._id;
-      const res = await axios.get(`api/v1/jobs/${userId}`);
+      const res = await axios.get(`api/v1/jobs/${userId}${searchUrl}`);
       const { jobs, totalJobs, numOfPages } = res.data;
       dispatch({
         type: "GET_JOBS_SUCCESS",
@@ -211,6 +223,10 @@ const AppProvider = ({ children }) => {
     }
   };
 
+  const clearFilters = () => {
+    dispatch({ type: 'CLEAR_FILTERS'})
+  }
+
   return (
     <AppContext.Provider
       value={{
@@ -226,7 +242,8 @@ const AppProvider = ({ children }) => {
         getAllJobs,
         setEditJob,
         editJob,
-        deleteJob
+        deleteJob,
+        clearFilters
       }}
     >
       {children}

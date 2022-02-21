@@ -200,6 +200,15 @@ const reducer = (state, action) => {
       alertText: action.payload.msg
     }
   }
+  if (action.type === 'CLEAR_FILTERS') {
+    return {
+      ...state,
+      search: '',
+      searchStatus: 'all',
+      searchType: 'all',
+      sort: 'latest'
+    }
+  }
 
   return state;
 };
